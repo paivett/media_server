@@ -4,27 +4,27 @@ services:
     container_name: plex
     network_mode: host
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
       - VERSION=docker
     volumes:
-      - /mnt/external_ssd/media_server/plex/config:/config
-      - /mnt/external_ssd/media_server/series:/tv
-      - /mnt/external_ssd/media_server/movies:/movies
+      - ${MEDIA_SERVER_DIR}/plex/config:/config
+      - ${MEDIA_SERVER_DIR}/series:/tv
+      - ${MEDIA_SERVER_DIR}/movies:/movies
     restart: unless-stopped
 
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /mnt/external_ssd/media_server/radarr:/config
-      - /mnt/external_ssd/media_server/movies:/movies #optional
-      - /mnt/external_ssd/media_server/downloads:/downloads #optional
+      - ${MEDIA_SERVER_DIR}/radarr:/config
+      - ${MEDIA_SERVER_DIR}/movies:/movies #optional
+      - ${MEDIA_SERVER_DIR}/downloads:/downloads #optional
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -33,13 +33,13 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /mnt/external_ssd/media_server/sonarr:/config
-      - /mnt/external_ssd/media_server/series:/tv #optional
-      - /mnt/external_ssd/media_server/downloads:/downloads #optional
+      - ${MEDIA_SERVER_DIR}/sonarr:/config
+      - ${MEDIA_SERVER_DIR}/series:/tv #optional
+      - ${MEDIA_SERVER_DIR}/downloads:/downloads #optional
     ports:
       - 8989:8989
     restart: unless-stopped
