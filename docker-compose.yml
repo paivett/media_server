@@ -1,3 +1,7 @@
+networks:
+  default:
+    name: media_server
+
 services:
   plex:
     image: lscr.io/linuxserver/plex:latest
@@ -10,8 +14,8 @@ services:
       - VERSION=docker
     volumes:
       - ${MEDIA_SERVER_DIR}/plex/config:/config
-      - ${MEDIA_SERVER_DIR}/series:/tv
-      - ${MEDIA_SERVER_DIR}/movies:/movies
+      - ${MEDIA_SERVER_DIR}/data/series:/tv
+      - ${MEDIA_SERVER_DIR}/data/movies:/movies
     restart: unless-stopped
 
   radarr:
@@ -23,8 +27,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${MEDIA_SERVER_DIR}/radarr:/config
-      - ${MEDIA_SERVER_DIR}/movies:/movies #optional
-      - ${MEDIA_SERVER_DIR}/downloads:/downloads #optional
+      - ${MEDIA_SERVER_DIR}/data/movies:/movies #optional
+      - ${MEDIA_SERVER_DIR}/data/downloads:/downloads #optional
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -38,8 +42,21 @@ services:
       - TZ=${TZ}
     volumes:
       - ${MEDIA_SERVER_DIR}/sonarr:/config
-      - ${MEDIA_SERVER_DIR}/series:/tv #optional
-      - ${MEDIA_SERVER_DIR}/downloads:/downloads #optional
+      - ${MEDIA_SERVER_DIR}/data/series:/tv #optional
+      - ${MEDIA_SERVER_DIR}/data/downloads:/downloads #optional
     ports:
       - 8989:8989
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${MEDIA_SERVER_DIR}/prowlarr:/config
+    ports:
+      - 9696:9696
     restart: unless-stopped
