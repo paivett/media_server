@@ -48,6 +48,21 @@ services:
       - 8989:8989
     restart: unless-stopped
 
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${MEDIA_SERVER_DIR}/bazarr/config:/config
+      - ${MEDIA_SERVER_DIR}/data/movies:/movies #optional
+      - ${MEDIA_SERVER_DIR}/data/series:/tv #optional
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -60,3 +75,22 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
+  
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - ${MEDIA_SERVER_DIR}/qbittorrent:/config
+      - ${MEDIA_SERVER_DIR}/data/downloads:/downloads
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+  
