@@ -13,9 +13,9 @@ services:
       - TZ=${TZ}
       - VERSION=docker
     volumes:
-      - ${MEDIA_SERVER_DIR}/plex/config:/config
-      - ${MEDIA_SERVER_DIR}/data/series:/tv
-      - ${MEDIA_SERVER_DIR}/data/movies:/movies
+      - ${MEDIA_SERVER_APPS_DIR}/plex/config:/config
+      - ${MEDIA_SERVER_DATA_DIR}/series:/tv
+      - ${MEDIA_SERVER_DATA_DIR}/movies:/movies
     restart: unless-stopped
 
   radarr:
@@ -26,9 +26,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${MEDIA_SERVER_DIR}/radarr:/config
-      - ${MEDIA_SERVER_DIR}/data/movies:/movies #optional
-      - ${MEDIA_SERVER_DIR}/data/downloads:/downloads #optional
+      - ${MEDIA_SERVER_APPS_DIR}/radarr:/config
+      - ${MEDIA_SERVER_DATA_DIR}/movies:/movies #optional
+      - ${MEDIA_SERVER_DATA_DIR}/downloads:/downloads #optional
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -41,9 +41,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${MEDIA_SERVER_DIR}/sonarr:/config
-      - ${MEDIA_SERVER_DIR}/data/series:/tv #optional
-      - ${MEDIA_SERVER_DIR}/data/downloads:/downloads #optional
+      - ${MEDIA_SERVER_APPS_DIR}/sonarr:/config
+      - ${MEDIA_SERVER_DATA_DIR}/series:/tv #optional
+      - ${MEDIA_SERVER_DATA_DIR}/downloads:/downloads #optional
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -56,9 +56,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${MEDIA_SERVER_DIR}/bazarr/config:/config
-      - ${MEDIA_SERVER_DIR}/data/movies:/movies #optional
-      - ${MEDIA_SERVER_DIR}/data/series:/tv #optional
+      - ${MEDIA_SERVER_APPS_DIR}/bazarr:/config
+      - ${MEDIA_SERVER_DATA_DIR}/movies:/movies #optional
+      - ${MEDIA_SERVER_DATA_DIR}/series:/tv #optional
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -71,7 +71,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${MEDIA_SERVER_DIR}/prowlarr:/config
+      - ${MEDIA_SERVER_APPS_DIR}/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -86,11 +86,10 @@ services:
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
     volumes:
-      - ${MEDIA_SERVER_DIR}/qbittorrent:/config
-      - ${MEDIA_SERVER_DIR}/data/downloads:/downloads
+      - ${MEDIA_SERVER_APPS_DIR}/qbittorrent:/config
+      - ${MEDIA_SERVER_DATA_DIR}/downloads:/downloads
     ports:
       - 8080:8080
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
-  
