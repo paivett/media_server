@@ -14,8 +14,7 @@ services:
       - VERSION=docker
     volumes:
       - ${MEDIA_SERVER_APPS_DIR}/plex/config:/config
-      - ${MEDIA_SERVER_DATA_DIR}/series:/tv
-      - ${MEDIA_SERVER_DATA_DIR}/movies:/movies
+      - ${MEDIA_SERVER_DATA_DIR}/media:/media
     restart: unless-stopped
 
   radarr:
@@ -27,8 +26,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${MEDIA_SERVER_APPS_DIR}/radarr:/config
-      - ${MEDIA_SERVER_DATA_DIR}/movies:/movies #optional
-      - ${MEDIA_SERVER_DATA_DIR}/downloads:/downloads #optional
+      - ${MEDIA_SERVER_DATA_DIR}:/data
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -42,8 +40,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${MEDIA_SERVER_APPS_DIR}/sonarr:/config
-      - ${MEDIA_SERVER_DATA_DIR}/series:/tv #optional
-      - ${MEDIA_SERVER_DATA_DIR}/downloads:/downloads #optional
+      - ${MEDIA_SERVER_DATA_DIR}:/data
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -57,8 +54,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${MEDIA_SERVER_APPS_DIR}/bazarr:/config
-      - ${MEDIA_SERVER_DATA_DIR}/movies:/movies #optional
-      - ${MEDIA_SERVER_DATA_DIR}/series:/tv #optional
+      - ${MEDIA_SERVER_DATA_DIR}/media:/data/media
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -87,7 +83,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - ${MEDIA_SERVER_APPS_DIR}/qbittorrent:/config
-      - ${MEDIA_SERVER_DATA_DIR}/downloads:/downloads
+      - ${MEDIA_SERVER_DATA_DIR}:/data
     ports:
       - 8080:8080
       - 6881:6881
