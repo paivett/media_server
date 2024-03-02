@@ -42,7 +42,7 @@ This Docker setup provides a comprehensive media server solution, comprising var
 
 ## Prerequisites
 - Docker installed on your system.
-- Configuration of environment variables:
+- Configuration of environment variables (can use a .env file):
   - `PUID`: User ID for file permissions within containers.
   - `PGID`: Group ID for file permissions within containers.
   - `TZ`: Your timezone.
