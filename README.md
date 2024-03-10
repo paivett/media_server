@@ -8,7 +8,7 @@ This Docker setup provides a comprehensive media server solution, comprising var
 - **Image**: lscr.io/linuxserver/plex:latest
 - **Container Name**: plex
 - **Description**: Plex is a media server allowing you to organize, stream, and access your media content.
-- **Ports**: No ports explicitly exposed, uses host network mode.
+- **Ports**: Exposes port 32400 for web UI.
 
 ### Radarr
 - **Image**: lscr.io/linuxserver/radarr:latest
